@@ -19,6 +19,16 @@ labelforfile.addEventListener('drop',e=>{
     }
 })
 
+labelforfile.addEventListener('click',()=>{
+    inputfile.addEventListener('change',()=>{
+       if(inputfile.files.length){
+        let insertedfile=inputfile.files[0]
+        createDisplayELement(createZone ,insertedfile)
+        inputfile.value=''
+       }
+    })
+})
+
 function createDisplayELement(createZone, file){
     const zoneWrapper = document.createElement('span');
     zoneWrapper.className='zoneWrapper'
