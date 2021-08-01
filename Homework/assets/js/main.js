@@ -28,10 +28,12 @@ labelforfile.addEventListener('click',()=>{
        }
     })
 })
-
+let id=0
 function createDisplayELement(createZone, file){
     const zoneWrapper = document.createElement('span');
     zoneWrapper.className='zoneWrapper'
+    zoneWrapper.draggable=true
+    zoneWrapper.id=id
     let displayzone=document.createElement('div');
     displayzone.classList.add('customcol3','m-2')
     zoneWrapper.append(displayzone)
@@ -47,6 +49,9 @@ function createDisplayELement(createZone, file){
 
     deletButtonMaker(zoneWrapper)
     deletefired()
+    dragimages(zoneWrapper,file)
+    draganddelete()
+    id++
 }
 
 function deletButtonMaker(zoneWrapper) {
@@ -65,6 +70,30 @@ function deletefired(){
         })
 }
 
+function dragimages(zoneWrapper,file){
+    zoneWrapper.addEventListener('dragstart',(e)=>{
+    const trashIcon = document.querySelector('.trash');
+    trashIcon.classList.add('opamax')
+    e.dataTransfer.setData('text',e.target.id)
+})
 
+zoneWrapper.addEventListener('dragend',()=>{
+    const trashIcon = document.querySelector('.trash');
+    trashIcon.classList.remove('opamax')
+})
+}
+
+function draganddelete(){
+    const trashIcon = document.querySelector('.trash');
+    trashIcon.addEventListener('dragover',(e)=>{
+        e.preventDefault()
+    })
+    trashIcon.addEventListener('drop',(e)=>{
+        e.preventDefault()
+       let data= e.dataTransfer.getData('text')
+       const elementtoremove = document.getElementById(data);
+       elementtoremove.remove()
+    })
+}
 
 
